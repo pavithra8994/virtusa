@@ -1,27 +1,27 @@
 import java.util.Scanner;
 
-// Interface
+
 interface Billable {
     double calculateTotal();
 }
 
-// Class implementing interface
+
 class UtilityBill implements Billable {
 
-    String customerName;
+    String customerNameName;
     int prevReading;
     int currReading;
     int units;
     double totalAmount;
 
-    // Constructor
+    
     UtilityBill(String name, int prev, int curr) {
         this.customerName = name;
         this.prevReading = prev;
         this.currReading = curr;
     }
 
-    // Method to calculate bill
+    
     public double calculateTotal() {
 
         units = currReading - prevReading;
@@ -36,17 +36,17 @@ class UtilityBill implements Billable {
             amount = (100 * 1.0) + (200 * 2.0) + ((units - 300) * 5.0);
         }
 
-        // Tax calculation (10%)
+        
         double tax = amount * 0.10;
         totalAmount = amount + tax;
 
         return totalAmount;
     }
 
-    // Method to print receipt
+    
     void print() {
-        System.out.println("\n===== SMARTPAY RECEIPT =====");
-        System.out.println("Customer Name : " + customerName);
+        System.out.println("\n---------SMARTPAY RECEIPT--------");
+        System.out.println("Name : " + customerName);
         System.out.println("Units Consumed: " + units);
         System.out.println("Total Amount  : $" + totalAmount);
         System.out.println("============================");
@@ -62,10 +62,10 @@ public class SmartPayApp {
 
         while (true) {
 
-            System.out.print("\nEnter Customer Name (or type Exit): ");
+            System.out.print("\nEnter  Name (or type Exit): ");
             String name = sc.nextLine();
 
-            // Exit condition
+            
             if (name.equalsIgnoreCase("Exit")) {
                 System.out.println("Exiting Application...");
                 break;
@@ -78,16 +78,16 @@ public class SmartPayApp {
             int curr = sc.nextInt();
             sc.nextLine(); 
 
-            // Validation
+            
             if (prev > curr) {
                 System.out.println("Error: Previous reading cannot be greater than current reading!");
                 continue;
             }
 
-            // Object creation
+            
             UtilityBill bill = new UtilityBill(name, prev, curr);
 
-            // Method calls
+            
             bill.calculateTotal();
             bill.print();
         }
