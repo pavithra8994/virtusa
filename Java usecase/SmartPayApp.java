@@ -1,33 +1,28 @@
 import java.util.Scanner;
 
-
 interface Billable {
     double calculateTotal();
 }
 
-
 class UtilityBill implements Billable {
 
-    String customerNameName;
+    String customerName;
     int prevReading;
     int currReading;
     int units;
     double totalAmount;
 
-    
     UtilityBill(String name, int prev, int curr) {
         this.customerName = name;
         this.prevReading = prev;
         this.currReading = curr;
     }
 
-    
     public double calculateTotal() {
 
         units = currReading - prevReading;
         double amount = 0;
 
-        
         if (units <= 100) {
             amount = units * 1.0;
         } else if (units <= 300) {
@@ -36,24 +31,21 @@ class UtilityBill implements Billable {
             amount = (100 * 1.0) + (200 * 2.0) + ((units - 300) * 5.0);
         }
 
-        
         double tax = amount * 0.10;
         totalAmount = amount + tax;
 
         return totalAmount;
     }
 
-    
-    void print() {
-        System.out.println("\n---------SMARTPAY RECEIPT--------");
-        System.out.println("Name : " + customerName);
+    void printReceipt() {
+        System.out.println("\n===== SMARTPAY RECEIPT =====");
+        System.out.println("Customer Name : " + customerName);
         System.out.println("Units Consumed: " + units);
         System.out.println("Total Amount  : $" + totalAmount);
         System.out.println("============================");
     }
 }
 
-// Main class
 public class SmartPayApp {
 
     public static void main(String[] args) {
@@ -62,10 +54,9 @@ public class SmartPayApp {
 
         while (true) {
 
-            System.out.print("\nEnter  Name (or type Exit): ");
+            System.out.print("\nEnter Customer Name (or type Exit): ");
             String name = sc.nextLine();
 
-            
             if (name.equalsIgnoreCase("Exit")) {
                 System.out.println("Exiting Application...");
                 break;
@@ -76,20 +67,22 @@ public class SmartPayApp {
 
             System.out.print("Enter Current Reading: ");
             int curr = sc.nextInt();
-            sc.nextLine(); 
+            sc.nextLine();
 
-            
+            if (prev < 0 || curr < 0) {
+                System.out.println("Error: Meter readings cannot be negative!");
+                continue;
+            }
+
             if (prev > curr) {
                 System.out.println("Error: Previous reading cannot be greater than current reading!");
                 continue;
             }
 
-            
             UtilityBill bill = new UtilityBill(name, prev, curr);
 
-            
             bill.calculateTotal();
-            bill.print();
+            bill.printReceipt();
         }
 
         sc.close();
